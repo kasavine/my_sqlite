@@ -1,4 +1,4 @@
-
+require 'csv'
 table = [{"name" => "iva", "age" => 5, "gender" => "F"}, {"name" => "tor", "age" => 2, "gender" => "M"}]
 columns = ["name", "gender"]
 
@@ -42,5 +42,14 @@ def order(list_of_hashes, order_type, column)
     end
 end
 
+
+
+def csv_to_hash(file)
+    CSV.foreach(file, headers: true) do |row|
+        puts row.inspect # hash
+      end
+end
+
+csv_to_hash('db.csv')
 order(table, "asc", "age")
 p table
