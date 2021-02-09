@@ -44,12 +44,10 @@ end
 
 
 
-def csv_to_hash(file)
-    CSV.foreach(file, headers: true) do |row|
-        puts row.inspect # hash
-      end
+def load_csv_hash(file)
+    CSV.parse(file, headers: :first_row).map(&:to_h)
 end
 
-csv_to_hash('db.csv')
+load_csv_hash('db.csv')
 order(table, "asc", "age")
 p table
