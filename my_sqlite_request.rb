@@ -2,10 +2,7 @@ require 'csv'
 # table = [{"name" => "iva", "age" => 5, "gender" => "F"}, {"name" => "tor", "age" => 2, "gender" => "M"}]
 # columns = ["name", "gender"]
 
-def load_csv_hash()
-    list_of_hashes = CSV.open('db.csv', headers: true).map(&:to_h)
-    list_of_hashes
-end
+
 
 def get_columns(list_of_hashes, list_of_columns)
     result = []
@@ -17,9 +14,8 @@ def get_columns(list_of_hashes, list_of_columns)
         end
         result << new_hash
     end
-    result
+    p result
 end
-
 
 def order(list_of_hashes, order_type, column)
     0.upto list_of_hashes.length - 1 do |i|
@@ -47,19 +43,13 @@ def order(list_of_hashes, order_type, column)
     end
 end
 
-def test_order
-    parsed_csv = load_csv_hash()
-    order(parsed_csv, "asc", "age")
-    p parsed_csv
+
+
+def load_csv_hash()
+    csv_file = CSV.open('db.csv', headers: true).map(&:to_h)
+    p csv_file
 end
 
-def test_get_columns
-    parsed_csv = load_csv_hash()
-    columns = ["name", "age"]
-    p get_columns(parsed_csv, columns)
-end
-
-# test_order
-
-# test_get_columns
-
+load_csv_hash()
+order(table, "asc", "age")
+# p table
