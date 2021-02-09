@@ -4,8 +4,8 @@ require 'csv'
 # columns = ["name", "gender"]
 
 def load_csv_hash()
-    csv_file = CSV.open('db.csv', headers: true).map(&:to_h)
-    csv_file
+    list_of_hashes = CSV.open('db.csv', headers: true).map(&:to_h)
+    list_of_hashes
 end
 
 def get_columns(list_of_hashes, list_of_columns)
