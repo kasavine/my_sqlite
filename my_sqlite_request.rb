@@ -1,16 +1,12 @@
 require 'csv'
 
-# table = [{"name" => "iva", "age" => 5, "gender" => "F"}, {"name" => "tor", "age" => 2, "gender" => "M"}]
-# columns = ["name", "gender"]
-
-def load_csv_hash()
+def load_csv_hash
     list_of_hashes = CSV.open('db.csv', headers: true).map(&:to_h)
-    list_of_hashes
+    return list_of_hashes
 end
 
 def get_columns(list_of_hashes, list_of_columns)
     result = []
-
     list_of_hashes.each do |hash|
         new_hash = {}
         list_of_columns.each do |column|
@@ -18,7 +14,7 @@ def get_columns(list_of_hashes, list_of_columns)
         end
         result << new_hash
     end
-    result
+     return result
 end
 
 def order(list_of_hashes, order_type, column)
@@ -45,21 +41,48 @@ def order(list_of_hashes, order_type, column)
             end
         end
     end
+    return list_of_hashes
 end
 
-def test_order
-    parsed_csv = load_csv_hash()
-    order(parsed_csv, "asc", "age")
-    p parsed_csv
+# {"name" => "iva", "age" => 5, "gender" => "F"}
+def insert(list_of_hashes, new_hash)
+    result = []
+    list_of_hashes.each do |row|
+        result.push(row)
+    end
+    result.push(new_hash)
+    return result
 end
 
-def test_get_columns
-    parsed_csv = load_csv_hash()
-    columns = ["name", "age"]
-    p get_columns(parsed_csv, columns)
+
+# helper for update
+def is_criteria_satisfied (line_from_list, criteria_hash)
+    criteria_hash.each do |key, value|
+        if value != line_from_list[key]
+            return false
+        end 
+    end
+    return true
 end
 
-# test_order
+# helper for update
+def my_merge(line_from_list, update_hash)
+    update_hash.each do |key, value|
+        line_from_list[key] = value
+    end
+    return line_from_list
+end
 
-# test_get_columns
+def update(list_of_hashes, criteria_hash, update_hash)
+    result = []
+    list_of_hashes.each do |row|
+        if is_criteria_satisfied(row, criteria_hash)
+            updated_row = my_merge(row, update_hash)
+            result << updated_row
+        else
+            result << row
+        end
+    end
+    return result
+end
 
