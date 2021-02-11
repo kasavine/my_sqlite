@@ -32,4 +32,10 @@ def test_update
     p update(parsed_csv, criteria_hash, update_hash)
 end
 
-test_update
+def test_where
+    parsed_csv = load_csv_hash()
+    criteria_hash = {"birth_state" => "CA"}
+    p where(parsed_csv, criteria_hash)
+end
+
+test_where

@@ -99,3 +99,14 @@ def update(list_of_hashes, criteria_hash, update_hash)
     return result
 end
 
+# list_of_hashes = {"name" => "Andre", "birth_state" => "CA", "age" => 60}, {...}, {...}]
+# criteria_hash = {"birth_state" => "CA"}
+def where(list_of_hashes, criteria_hash)
+    result = []
+    list_of_hashes.each do |row|
+        if is_criteria_satisfied(row, criteria_hash)
+            result << row
+        end
+    end
+    return result
+end
