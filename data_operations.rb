@@ -8,6 +8,13 @@ def load_csv_hash
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# result ->> name,birth_state,age
+#           Andre,CA,60
+def save_hashes_to_csv (list_of_hashes)
+
+end
+
+# list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # list_of_columns = ["name", "age"] 
 def get_columns(list_of_hashes, list_of_columns)
     result = []
