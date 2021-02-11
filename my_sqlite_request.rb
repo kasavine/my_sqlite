@@ -3,18 +3,14 @@ require 'csv'
 # columns = ["name", "gender"]
 
 
-# table = [{"name" => "iva", "age" => 5, "gender" => "F"}, {"name" => "tor", "age" => 2, "gender" => "M"}]
-# columns = ["name", "gender"]
-
-def load_csv_hash()
+def load_csv_hash
     list_of_hashes = CSV.open('db.csv', headers: true).map(&:to_h)
-    list_of_hashes
+    return list_of_hashes
 end
 
 
 def get_columns(list_of_hashes, list_of_columns)
     result = []
-
     list_of_hashes.each do |hash|
         new_hash = {}
         list_of_columns.each do |column|
@@ -22,7 +18,7 @@ def get_columns(list_of_hashes, list_of_columns)
         end
         result << new_hash
     end
-    result
+     return result
 end
 
 def order(list_of_hashes, order_type, column)
@@ -49,28 +45,8 @@ def order(list_of_hashes, order_type, column)
             end
         end
     end
+    return list_of_hashes
 end
-
-
-def where(parsed_csv, column, criteria)
-    result = []
-    columns = get_columns(parsed_csv,column)
-    0.upto columns.length - 1 do |i|
-        p columns[i]
-        p criteria
-        if columns[i] == criteria
-            p columns[i]
-        end     
-    end
-end
-
-
-def test_where(column,criteria)
-    parsed_csv = load_csv_hash()
-    where(parsed_csv, column, criteria)
-end
-
-test_where("name","Andre")
 
 
 
@@ -80,17 +56,38 @@ def test_order
     p parsed_csv
 end
 
-def test_get_columns
-    parsed_csv = load_csv_hash()
-    columns = ["name", "age"]
-    p get_columns(parsed_csv, columns)
+
+# helper for update
+def is_criteria_satisfied (line_from_list, criteria_hash)
+    criteria_hash.each do |key, value|
+        if value != line_from_list[key]
+            return false
+        end 
+    end
+    return true
+end
+
+def where(list_of_hashes, target, criteria)
+    result = []
+    list_of_hashes.each do |row|
+        if is_criteria_satisfied(row, criteria)
+            p 'else'
+        end
+    end
 end
 
 
 
-# test_where(["name"], ['andre'])   
-
-# test_order
-
-# test_get_columns
+def update(list_of_hashes, criteria_hash, update_hash)
+    result = []
+    list_of_hashes.each do |row|
+        if is_criteria_satisfied(row, criteria_hash)
+            updated_row = my_merge(row, update_hash)
+            result << updated_row
+        else
+            result << row
+        end
+    end
+    return result
+end
 
