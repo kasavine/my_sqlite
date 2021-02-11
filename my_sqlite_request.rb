@@ -1,10 +1,14 @@
 require 'csv'
 
+
+# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 def load_csv_hash
     list_of_hashes = CSV.open('db.csv', headers: true).map(&:to_h)
     return list_of_hashes
 end
 
+# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# list_of_columns = ["name", "age"] 
 def get_columns(list_of_hashes, list_of_columns)
     result = []
     list_of_hashes.each do |hash|
@@ -17,6 +21,9 @@ def get_columns(list_of_hashes, list_of_columns)
      return result
 end
 
+# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# order_type = "asc" OR "desc"
+# column = "name"
 def order(list_of_hashes, order_type, column)
     0.upto list_of_hashes.length - 1 do |i|
         i.upto list_of_hashes.length - 1 do |j|
@@ -44,7 +51,8 @@ def order(list_of_hashes, order_type, column)
     return list_of_hashes
 end
 
-# {"name" => "iva", "age" => 5, "gender" => "F"}
+# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# new_hash = {"name" => "iva", "age" => 5, "gender" => "F"}
 def insert(list_of_hashes, new_hash)
     result = []
     list_of_hashes.each do |row|
@@ -54,8 +62,9 @@ def insert(list_of_hashes, new_hash)
     return result
 end
 
-
-# helper for update
+# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# criteria_hash = {"name" => "tor", "age" => 2}
+# true or false
 def is_criteria_satisfied (line_from_list, criteria_hash)
     criteria_hash.each do |key, value|
         if value != line_from_list[key]
@@ -65,7 +74,8 @@ def is_criteria_satisfied (line_from_list, criteria_hash)
     return true
 end
 
-# helper for update
+# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# update_hash = {"name" => "tor", "age" => 555}
 def my_merge(line_from_list, update_hash)
     update_hash.each do |key, value|
         line_from_list[key] = value
@@ -73,6 +83,9 @@ def my_merge(line_from_list, update_hash)
     return line_from_list
 end
 
+# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# criteria_hash = {"name" => "tor", "age" => 2}
+# update_hash = {"name" => "tor", "age" => 555, "gender" => "M"}
 def update(list_of_hashes, criteria_hash, update_hash)
     result = []
     list_of_hashes.each do |row|
