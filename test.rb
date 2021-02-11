@@ -1,5 +1,5 @@
-require_relative "my_sqlite_request"
-
+# require_relative "my_sqlite_request"
+require_relative "data_operations"
 def test_order
     parsed_csv = load_csv_hash()
     order(parsed_csv, "asc", "age")
