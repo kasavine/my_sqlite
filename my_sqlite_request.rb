@@ -1,13 +1,13 @@
 require 'csv'
 
 
-# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 def load_csv_hash
     list_of_hashes = CSV.open('db.csv', headers: true).map(&:to_h)
     return list_of_hashes
 end
 
-# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # list_of_columns = ["name", "age"] 
 def get_columns(list_of_hashes, list_of_columns)
     result = []
@@ -21,7 +21,7 @@ def get_columns(list_of_hashes, list_of_columns)
      return result
 end
 
-# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # order_type = "asc" OR "desc"
 # column = "name"
 def order(list_of_hashes, order_type, column)
@@ -51,7 +51,7 @@ def order(list_of_hashes, order_type, column)
     return list_of_hashes
 end
 
-# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # new_hash = {"name" => "iva", "age" => 5, "gender" => "F"}
 def insert(list_of_hashes, new_hash)
     result = []
@@ -62,7 +62,7 @@ def insert(list_of_hashes, new_hash)
     return result
 end
 
-# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # criteria_hash = {"name" => "tor", "age" => 2}
 # true or false
 def is_criteria_satisfied (line_from_list, criteria_hash)
@@ -74,7 +74,7 @@ def is_criteria_satisfied (line_from_list, criteria_hash)
     return true
 end
 
-# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # update_hash = {"name" => "tor", "age" => 555}
 def my_merge(line_from_list, update_hash)
     update_hash.each do |key, value|
@@ -83,7 +83,7 @@ def my_merge(line_from_list, update_hash)
     return line_from_list
 end
 
-# list_of_hashes = {"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
+# list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # criteria_hash = {"name" => "tor", "age" => 2}
 # update_hash = {"name" => "tor", "age" => 555, "gender" => "M"}
 def update(list_of_hashes, criteria_hash, update_hash)
@@ -99,12 +99,26 @@ def update(list_of_hashes, criteria_hash, update_hash)
     return result
 end
 
-# list_of_hashes = {"name" => "Andre", "birth_state" => "CA", "age" => 60}, {...}, {...}]
+# list_of_hashes = [{"name" => "Andre", "birth_state" => "CA", "age" => 60}, {...}, {...}]
 # criteria_hash = {"birth_state" => "CA"}
 def where(list_of_hashes, criteria_hash)
     result = []
     list_of_hashes.each do |row|
         if is_criteria_satisfied(row, criteria_hash)
+            result << row
+        end
+    end
+    return result
+end
+
+# list_of_hashes = [{"name" => "Andre", "birth_state" => "CA", "age" => 60}, {...}, {...}]
+# criteria_hash = {"birth_state" => "CA"}
+def delete(list_of_hashes, criteria_hash)
+    result = []
+    list_of_hashes.each do |row|
+        if is_criteria_satisfied(row, criteria_hash)
+            next
+        else
             result << row
         end
     end

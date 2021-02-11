@@ -38,4 +38,10 @@ def test_where
     p where(parsed_csv, criteria_hash)
 end
 
-test_where
+def test_delete
+    parsed_csv = load_csv_hash()
+    criteria_hash = {"birth_state" => "CA"}
+    p delete(parsed_csv, criteria_hash)
+end
+
+test_delete
