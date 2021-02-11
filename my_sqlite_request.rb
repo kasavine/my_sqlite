@@ -11,6 +11,7 @@ def load_csv_hash()
     list_of_hashes
 end
 
+
 def get_columns(list_of_hashes, list_of_columns)
     result = []
 
@@ -50,6 +51,29 @@ def order(list_of_hashes, order_type, column)
     end
 end
 
+
+def where(parsed_csv, column, criteria)
+    result = []
+    columns = get_columns(parsed_csv,column)
+    0.upto columns.length - 1 do |i|
+        p columns[i]
+        p criteria
+        if columns[i] == criteria
+            p columns[i]
+        end     
+    end
+end
+
+
+def test_where(column,criteria)
+    parsed_csv = load_csv_hash()
+    where(parsed_csv, column, criteria)
+end
+
+test_where("name","Andre")
+
+
+
 def test_order
     parsed_csv = load_csv_hash()
     order(parsed_csv, "asc", "age")
@@ -62,18 +86,9 @@ def test_get_columns
     p get_columns(parsed_csv, columns)
 end
 
-def test_where(column,criteria)
-    parsed_csv = load_csv_hash()
-    columns = get_columns(parsed_csv,column)
-    0.upto columns.length - 1  do |i|
-        if columns[i] = criteria 
-            p criteria
-            break
-        end
-    end
-end
 
-test_where(["name"], ['andre'])   
+
+# test_where(["name"], ['andre'])   
 
 # test_order
 
