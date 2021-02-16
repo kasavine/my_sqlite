@@ -3,11 +3,7 @@ require 'csv'
 # columns = ["name", "gender"]
 
 
-def load_csv_hash
-    list_of_hashes = CSV.open('db.csv', headers: true).map(&:to_h)
-    return list_of_hashes
-end
-
+class MySqliteRequest
 
 def get_columns(list_of_hashes, list_of_columns)
     result = []
@@ -45,8 +41,6 @@ def order(list_of_hashes, order_type, column)
             end
         end
     end
-    return list_of_hashes
-end
 
 
 
@@ -57,22 +51,19 @@ def test_order
 end
 
 
-# helper for update
-def is_criteria_satisfied (line_from_list, criteria_hash)
-    criteria_hash.each do |key, value|
-        if value != line_from_list[key]
-            return false
-        end 
-    end
-    return true
+def select(columns)
+    @request = 'select'
+    @columns = columns
+    return self
 end
 
 def where(list_of_hashes, criteria_hash)
     result = []
-    list_of_hashes.each do |row|
+    if is_criteria_satisfied(row, critera_hash)
         result << row
+        p row
     end
-    p result
+end
     result
 end
 
@@ -88,6 +79,6 @@ def update(list_of_hashes, criteria_hash, update_hash)
             result << row
         end
     end
-    return result
 end
 
+end

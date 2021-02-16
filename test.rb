@@ -1,5 +1,5 @@
-require_relative "my_sqlite_request"
-
+# require_relative "my_sqlite_request"
+require_relative "data_operations"
 def test_order
     parsed_csv = load_csv_hash()
     order(parsed_csv, "asc", "age")
@@ -34,11 +34,11 @@ end
 
 def test_where(column,criteria)
     parsed_csv = load_csv_hash()
-    critera_hash = {"name" => "Andre"}
+    critera_hash = {column => criteria}
     p where(parsed_csv, critera_hash)
 end
 
 
 # test_update
 
-test_where
+test_where("name", "Andre")
