@@ -30,7 +30,8 @@ def test_update
     parsed_csv = load_csv_hash()
     criteria_hash = {"name" => "Andre"}
     update_hash = {"name" => "IVAN", "birth_state" => "NY"}
-    p update(parsed_csv, criteria_hash, update_hash)
+    new_list = update(parsed_csv, criteria_hash, update_hash)
+    write_to_file(new_list)
 end
 
 def test_where
@@ -45,10 +46,4 @@ def test_delete
     p delete(parsed_csv, criteria_hash)
 end
 
-def test_select
-    MySqliteRequest.new.from('db.csv').select(['name', 'age']).run
-    MySqliteRequest.new.from('db.csv').select(['name']).run
-    MySqliteRequest.new.from('db.csv').select(['birth_state']).run
-end
-
-test_select
+test_update

@@ -1,9 +1,8 @@
 require 'csv'
 
-
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 def load_csv_hash
-    list_of_hashes = CSV.open(@db, headers: true).map(&:to_h)
+    list_of_hashes = CSV.open("db.csv", headers: true).map(&:to_h)
     return list_of_hashes
 end
 
@@ -11,7 +10,11 @@ end
 # result ->> name,birth_state,age
 #           Andre,CA,60
 def write_to_file(list_of_hashes)
-
+    CSV.open("db.csv", 'w') do |csv|
+        list_of_hashes.each do |hash|
+            csv << hash.values
+        end
+    end
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
