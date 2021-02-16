@@ -61,7 +61,6 @@ def where(list_of_hashes, criteria_hash)
     result = []
     if is_criteria_satisfied(row, critera_hash)
         result << row
-        p row
     end
 end
     result
