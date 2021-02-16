@@ -11,7 +11,10 @@ end
 # result ->> name,birth_state,age
 #           Andre,CA,60
 def save_hashes_to_csv (list_of_hashes)
-
+    CSV.open("db.csv", list_of_hashes) do |csv|
+        list_of_hashes.each do |hash|
+        p csv << hash.values
+    end
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
