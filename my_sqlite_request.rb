@@ -67,13 +67,13 @@ def is_criteria_satisfied (line_from_list, criteria_hash)
     return true
 end
 
-def where(list_of_hashes, target, criteria)
+def where(list_of_hashes, criteria_hash)
     result = []
     list_of_hashes.each do |row|
-        if is_criteria_satisfied(row, criteria)
-            p 'else'
-        end
+        result << row
     end
+    p result
+    result
 end
 
 

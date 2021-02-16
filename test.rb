@@ -35,8 +35,10 @@ end
 def test_where(column,criteria)
     parsed_csv = load_csv_hash()
     critera_hash = {"name" => "Andre"}
-    where(parsed_csv, column, criteria)
+    p where(parsed_csv, critera_hash)
 end
 
 
-test_update
+# test_update
+
+test_where
