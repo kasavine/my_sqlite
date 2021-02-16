@@ -1,5 +1,6 @@
-# require_relative "my_sqlite_request"
+require_relative "my_sqlite_request"
 require_relative "data_operations"
+
 def test_order
     parsed_csv = load_csv_hash()
     order(parsed_csv, "asc", "age")
@@ -44,4 +45,10 @@ def test_delete
     p delete(parsed_csv, criteria_hash)
 end
 
-test_delete
+def test_select
+    MySqliteRequest.new.from('db.csv').select(['name', 'age']).run
+    MySqliteRequest.new.from('db.csv').select(['name']).run
+    MySqliteRequest.new.from('db.csv').select(['birth_state']).run
+end
+
+test_select

@@ -3,14 +3,14 @@ require 'csv'
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 def load_csv_hash
-    list_of_hashes = CSV.open('db.csv', headers: true).map(&:to_h)
+    list_of_hashes = CSV.open(@db, headers: true).map(&:to_h)
     return list_of_hashes
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # result ->> name,birth_state,age
 #           Andre,CA,60
-def save_hashes_to_csv (list_of_hashes)
+def write_to_file(list_of_hashes)
 
 end
 
