@@ -137,6 +137,6 @@ class TestRequests
     end
 end
 
-# request = TestRequests.new
-# request.test_insert
-# request.test_select_where_order
+request = TestRequests.new
+request.test_insert
+# request.test_select

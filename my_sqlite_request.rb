@@ -99,8 +99,8 @@ class MySqliteRequest
 
     # Run - implements a run method and it will execute the request.
     def run
+        parsed_csv = load_csv_hash(@table_name)
         if @request == 'select'
-            parsed_csv = load_csv_hash(@table_name)
             if @order_request != nil
                 parsed_csv = order_op(parsed_csv, @order_request[:order], @order_request[:column_name])
             end
@@ -111,7 +111,6 @@ class MySqliteRequest
         end
 
         if @request == 'insert'
-            parsed_csv = load_csv_hash(@table_name)
             if @data != nil
                 parsed_csv = insert_op(parsed_csv, @data)
             end
@@ -119,7 +118,6 @@ class MySqliteRequest
         end
 
         if @request == 'update'
-            parsed_csv = load_csv_hash(@table_name)
             if @where != nil
                 @where = {@where[:column]=> @where[:value]}
             end
@@ -128,7 +126,6 @@ class MySqliteRequest
         end
 
         if @request == 'delete'
-            parsed_csv = load_csv_hash(@table_name)
             if @where != nil
                 @where = {@where[:column]=> @where[:value]}
             end
@@ -137,14 +134,3 @@ class MySqliteRequest
         end
     end
 end
-
-# MySqliteRequest.new.from("db.csv").select(["name", "age"]).order("asc", "age").run
-# MySqliteRequest.new.from("db.csv").select(["name", "age"]).where("name", "Andre").run
-
-# MySqliteRequest.new.insert('db.csv').values({"name"=>"A", "birth_state"=>"CA", "age"=>"60"}).run
-
-# MySqliteRequest.new.update('db.csv').set({"name"=>"B"}).run
-
-# MySqliteRequest.new.update('db.csv').set({"name"=>"A", "birth_state"=>"CA", "age"=>"60"}).run
-# MySqliteRequest.new.from('db.csv').select(['name', 'age']).run
-MySqliteRequest.new.delete("db.csv").where("name", "A").run
