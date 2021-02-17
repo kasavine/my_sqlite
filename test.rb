@@ -44,8 +44,8 @@ class Test
     def test_delete
         parsed_csv = load_csv_hash()
         criteria_hash = {"birth_state" => "NJ"}
-        p delete(parsed_csv, criteria_hash)
-        # write_to_file(result)
+        data = delete(parsed_csv, criteria_hash)
+        write_to_file(data)
     end
 
 end
