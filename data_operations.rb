@@ -140,3 +140,9 @@ def delete_op(list_of_hashes, criteria_hash)
     return result
 end
 
+def join_op(list_of_hashes, criteria_hash_1, criteria_hash_2)
+    result = []
+    list_of_hashes.each do |row|
+        
+    
+end
