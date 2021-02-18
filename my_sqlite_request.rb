@@ -9,7 +9,7 @@ class MySqliteRequest
         @request = nil
     end
      return result
-end
+# end
 
 def order(list_of_hashes, order_type, column)
     0.upto list_of_hashes.length - 1 do |i|

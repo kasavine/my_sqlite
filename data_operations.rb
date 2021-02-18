@@ -139,3 +139,4 @@ def delete_op(list_of_hashes, criteria_hash)
     end
     return result
 end
+
