@@ -17,7 +17,7 @@ class TestOperations
     def test_insert
         parsed_csv = load_csv_hash()
         new_hash = {"name" => "iva", "birth_state" => "CA", "age" => 90}
-        p insert(parsed_csv, new_hash)
+        p insert_op(parsed_csv, new_hash)
     end
 
     def test_is_criteria
@@ -30,20 +30,20 @@ class TestOperations
         parsed_csv = load_csv_hash()
         criteria_hash = {"name" => "Andre"}
         update_hash = {"name" => "IVAN", "birth_state" => "NY"}
-        p update(parsed_csv, criteria_hash, update_hash)
+        p update_op(parsed_csv, criteria_hash, update_hash)
         write_to_file(result)
     end
 
     def test_where
         parsed_csv = load_csv_hash()
         criteria_hash = {"birth_state" => "CA"}
-        p where(parsed_csv, criteria_hash)
+        p where_op(parsed_csv, criteria_hash)
     end
 
     def test_delete
         parsed_csv = load_csv_hash()
         criteria_hash = {"birth_state" => "NJ"}
-        p delete(parsed_csv, criteria_hash)
+        p delete_op(parsed_csv, criteria_hash)
     end
 end
 
@@ -137,6 +137,6 @@ class TestRequests
     end
 end
 
-request = TestRequests.new
-request.test_insert
+# request = TestRequests.new
+# request.test_insert
 # request.test_select
