@@ -20,7 +20,11 @@ class MySqliteRequest
     # During the run() you will collect on the result only the columns sent as parameters to select :-)
     def select(columns)
         @request = 'select'
-        @columns = columns
+        if columns == nil
+            puts "ERROR - you need to provide column(s)."
+        else 
+            @columns = columns
+        end
         return self
     end
 
@@ -28,20 +32,39 @@ class MySqliteRequest
     # It will continue to build the request. 
     # During the run() you will filter the result which match the value.
     def where(column, value)
-        @where = {column: column, value: value}
+        if column == nil || value == nil
+            puts "ERROR - wrong format for WHERE, ypu need to provide conditions"
+        else
+            @where = {column: column, value: value}
+        end
         return self
     end
 
     # Join - implements a join method which will load another filename_db 
     # and will join both database on a on column.
-    # def join
-    # end
+    def join(column_on_db_a, filename_db_b, column_on_db_b)
+
+        #  if no column_on_db_a || no filename_db_b || column_on_db_b  --> @data = nil
+
+        # filename_db_b is not file --> some kind of error
+
+        # if no such column in column_on_db_a  -- error???
+
+        @join = {column_a: column_on_db_a, column_b: column_on_db_b}
+        @table_name_join = filename_db_b
+
+        return self
+    end
 
     # Order - implements an order method which will received two parameters, 
     # order (:asc or :desc) and column_name. 
     # It will sort depending on the order base on the column_name.
     def order(order, column_name)
-        @order_request = {order: order, column_name: column_name}
+        if !column_name || ![":desc", ":asc"].index(order)
+            puts "ERROR - wrong format for ORDER"
+        else
+            @order_request = {order: order, column_name: column_name}
+        end
         return self
     end
 
@@ -59,7 +82,9 @@ class MySqliteRequest
     # During the run() you do the insert.
     def values(data)
         if @request != 'insert'
-            p 'ERROR: VALUES works in pair with INSERT'
+            puts "ERROR: VALUES works in pair with INSERT"
+        elsif data == nil
+            puts "ERROR: Provide data to insert"
         else
             @data = data
         end
@@ -81,7 +106,9 @@ class MySqliteRequest
     def set(data)
         if @request != 'update'
             p 'ERROR: SET works in pair with UPDATE'
-        else 
+        elsif data == nil
+            puts "ERROR: Provide data to update"
+        else
             @data = data
         end
         return self
@@ -95,6 +122,10 @@ class MySqliteRequest
         @request = 'delete'
         @table_name = table_name
         return self
+    end
+
+    def run_join
+        # HOW TO RUN JOIN ???
     end
 
     # Run - implements a run method and it will execute the request.
