@@ -137,8 +137,6 @@ class TestRequests
     end
 end
 
-request = TestRequests.new
+# request = TestRequests.new
 # request.test_insert
 # request.test_select
-
-request.test_delete
