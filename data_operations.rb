@@ -1,20 +1,22 @@
 require 'csv'
 
-
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
-def load_csv_hash
-    list_of_hashes = CSV.open('db.csv', headers: true).map(&:to_h)
+def load_csv_hash(db_name)
+    list_of_hashes = CSV.open(db_name, headers: true).map(&:to_h)
     return list_of_hashes
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # result ->> name,birth_state,age
 #           Andre,CA,60
-def save_hashes_to_csv (list_of_hashes)
-    CSV.open("db.csv", list_of_hashes) do |csv|
+def write_to_file(list_of_hashes, db_name)
+    CSV.open(db_name, "w", :headers => true) do |csv|
+        csv << list_of_hashes[0].keys # how to fix this???
         list_of_hashes.each do |hash|
-        p csv << hash.values
+            csv << CSV::Row.new(hash.keys, hash.values)
+        end
     end
+
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
@@ -34,7 +36,7 @@ end
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # order_type = "asc" OR "desc"
 # column = "name"
-def order(list_of_hashes, order_type, column)
+def order_op(list_of_hashes, order_type, column)
     0.upto list_of_hashes.length - 1 do |i|
         i.upto list_of_hashes.length - 1 do |j|
             line_i = list_of_hashes[i] # "name" => "iva", "age" => 5, "gender" => "F"}
@@ -63,7 +65,7 @@ end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # new_hash = {"name" => "iva", "age" => 5, "gender" => "F"}
-def insert(list_of_hashes, new_hash)
+def insert_op(list_of_hashes, new_hash)
     result = []
     list_of_hashes.each do |row|
         result.push(row)
@@ -76,6 +78,9 @@ end
 # criteria_hash = {"name" => "tor", "age" => 2}
 # true or false
 def is_criteria_satisfied (line_from_list, criteria_hash)
+    if criteria_hash == nil
+        return true
+    end
     criteria_hash.each do |key, value|
         if value != line_from_list[key]
             return false
@@ -96,7 +101,7 @@ end
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # criteria_hash = {"name" => "tor", "age" => 2}
 # update_hash = {"name" => "tor", "age" => 555, "gender" => "M"}
-def update(list_of_hashes, criteria_hash, update_hash)
+def update_op(list_of_hashes, criteria_hash, update_hash)
     result = []
     list_of_hashes.each do |row|
         if is_criteria_satisfied(row, criteria_hash)
@@ -111,7 +116,7 @@ end
 
 # list_of_hashes = [{"name" => "Andre", "birth_state" => "CA", "age" => 60}, {...}, {...}]
 # criteria_hash = {"birth_state" => "CA"}
-def where(list_of_hashes, criteria_hash)
+def where_op(list_of_hashes, criteria_hash)
     result = []
     list_of_hashes.each do |row|
         if is_criteria_satisfied(row, criteria_hash)
@@ -123,7 +128,7 @@ end
 
 # list_of_hashes = [{"name" => "Andre", "birth_state" => "CA", "age" => 60}, {...}, {...}]
 # criteria_hash = {"birth_state" => "CA"}
-def delete(list_of_hashes, criteria_hash)
+def delete_op(list_of_hashes, criteria_hash)
     result = []
     list_of_hashes.each do |row|
         if is_criteria_satisfied(row, criteria_hash)

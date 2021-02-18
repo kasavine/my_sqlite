@@ -4,15 +4,9 @@ require 'csv'
 
 
 class MySqliteRequest
-
-def get_columns(list_of_hashes, list_of_columns)
-    result = []
-    list_of_hashes.each do |hash|
-        new_hash = {}
-        list_of_columns.each do |column|
-            new_hash[column] = hash[column]
-        end
-        result << new_hash
+    def initialize
+        @table_name = nil
+        @request = nil
     end
      return result
 end
@@ -26,56 +20,133 @@ def order(list_of_hashes, order_type, column)
             val_i = line_i[column] #  "age" => 5
             val_j = line_j[column] #  "age" => 2
 
-            if order_type == "asc"
-                if val_i > val_j
-                    temp = list_of_hashes[i]
-                    list_of_hashes[i] = list_of_hashes[j]
-                    list_of_hashes[j] = temp
-                end
-            else
-                if val_i < val_j
-                    temp = list_of_hashes[i]
-                    list_of_hashes[i] = list_of_hashes[j]
-                    list_of_hashes[j] = temp
-                end
-            end
-        end
+    # From - implements a from method which must be present on each request. 
+    # From will take a parameter and it will be the name of the table. 
+    # (technically a table_name is also a filename (.csv))
+    def from(table_name)
+        @table_name = table_name
+        return self
     end
 
-
-
-def test_order
-    parsed_csv = load_csv_hash()
-    order(parsed_csv, "asc", "age")
-    p parsed_csv
-end
-
-
-def select(columns)
-    @request = 'select'
-    @columns = columns
-    return self
-end
-
-def where(list_of_hashes, criteria_hash)
-    result = []
-    if is_criteria_satisfied(row, critera_hash)
-        result << row
+    # Select - implements a select method which will take one argument a string OR an array of string. 
+    # It will continue to build the request. 
+    # During the run() you will collect on the result only the columns sent as parameters to select :-)
+    def select(columns)
+        @request = 'select'
+        @columns = columns
+        return self
     end
 end
     result
 end
 
+    # Where - implements a where method which will take 2 arguments: column_name and value. 
+    # It will continue to build the request. 
+    # During the run() you will filter the result which match the value.
+    def where(column, value)
+        @where = {column: column, value: value}
+        return self
+    end
 
+    # Join - implements a join method which will load another filename_db 
+    # and will join both database on a on column.
+    # def join
+    # end
 
-def update(list_of_hashes, criteria_hash, update_hash)
-    result = []
-    list_of_hashes.each do |row|
-        if is_criteria_satisfied(row, criteria_hash)
-            updated_row = my_merge(row, update_hash)
-            result << updated_row
+    # Order - implements an order method which will received two parameters, 
+    # order (:asc or :desc) and column_name. 
+    # It will sort depending on the order base on the column_name.
+    def order(order, column_name)
+        @order_request = {order: order, column_name: column_name}
+        return self
+    end
+
+    # Insert - implements a method insert which will receive a table name (filename). 
+    # It will continue to build the request.
+    def insert(table_name)
+        @request = 'insert'
+        @table_name = table_name
+        return self
+    end
+
+    # Values - implements a method values which will receive data. 
+    # (a hash of data on format (key => value)). 
+    # It will continue to build the request. 
+    # During the run() you do the insert.
+    def values(data)
+        if @request != 'insert'
+            p 'ERROR: VALUES works in pair with INSERT'
         else
-            result << row
+            @data = data
+        end
+        return self
+    end
+
+    # Update - implements a method update which will receive a table name (filename). 
+    # It will continue to build the request. 
+    # An update request might be associated with a where request.
+    def update(table_name)
+        @request = 'update'
+        @table_name = table_name
+        return self
+    end
+
+    # Set - implements a method set which will receive data (a hash of data on format (key => value)). 
+    # It will perform the update of attributes on all matching row. 
+    # An update request might be associated with a where request.
+    def set(data)
+        if @request != 'update'
+            p 'ERROR: SET works in pair with UPDATE'
+        else 
+            @data = data
+        end
+        return self
+    end
+
+    # Delete - implements a delete method. 
+    # It set the request to delete on all matching row. 
+    # It will continue to build the request. 
+    # An delete request might be associated with a where request.
+    def delete(table_name)
+        @request = 'delete'
+        @table_name = table_name
+        return self
+    end
+
+    # Run - implements a run method and it will execute the request.
+    def run
+        parsed_csv = load_csv_hash(@table_name)
+        if @request == 'select'
+            if @order_request != nil
+                parsed_csv = order_op(parsed_csv, @order_request[:order], @order_request[:column_name])
+            end
+            if @where != nil
+                parsed_csv = where_op(parsed_csv, {@where[:column]=> @where[:value]})
+            end
+            p get_columns(parsed_csv, @columns)
+        end
+
+        if @request == 'insert'
+            if @data != nil
+                parsed_csv = insert_op(parsed_csv, @data)
+            end
+            write_to_file(parsed_csv, @table_name)
+        end
+
+        if @request == 'update'
+            if @where != nil
+                @where = {@where[:column]=> @where[:value]}
+            end
+            parsed_csv = update_op(parsed_csv, @where, @data)
+            write_to_file(parsed_csv, @table_name)
+        end
+
+        if @request == 'delete'
+            if @where != nil
+                @where = {@where[:column]=> @where[:value]}
+            end
+            parsed_csv = delete_op(parsed_csv, @where)
+            write_to_file(parsed_csv, @table_name)
         end
     end
 end
