@@ -93,16 +93,13 @@ class TestRequests
 
         # how to handle case when csv file is empty - is there have to be at least one record with keys ???
 
-        MySqliteRequest.new.insert('db.csv').values({"name"=>"A", "birth_state"=>"CA", "age"=>"10"}).run
-        MySqliteRequest.new.insert('db.csv').values({"name"=>"G", "birth_state"=>"CA", "age"=>"60"}).run
-        MySqliteRequest.new.insert('db.csv').values({"name"=>"D", "birth_state"=>"NY", "age"=>"30"}).run
-        MySqliteRequest.new.insert('db.csv').values({"name"=>"E", "birth_state"=>"NY", "age"=>"20"}).run
-        MySqliteRequest.new.insert('db.csv').values({"name"=>"C", "birth_state"=>"TX", "age"=>"50"}).run
-        MySqliteRequest.new.insert('db.csv').values({"name"=>"B", "birth_state"=>"WA", "age"=>"40"}).run
-        MySqliteRequest.new.insert('db.csv').values({"name"=>"I", "birth_state"=>"WA", "age"=>"90"}).run
+        MySqliteRequest.new.insert('db.csv').values({"name"=>"Den", "birth_state"=>"CA", "age"=>"10"}).run
+        MySqliteRequest.new.insert('db.csv').values({"name"=>"Maria", "birth_state"=>"TX", "age"=>"60"}).run
+        MySqliteRequest.new.insert('db.csv').values({"name"=>"Carlos", "birth_state"=>"NY", "age"=>"30"}).run
+        MySqliteRequest.new.insert('db.csv').values({"name"=>"Stephany", "birth_state"=>"OR", "age"=>"20"}).run
 
         # how to handle this case ???
-        MySqliteRequest.new.insert('db.csv').values({"name"=>"I", "age"=>"90"}).run
+        # MySqliteRequest.new.insert('db.csv').values({"name"=>"I", "age"=>"90"}).run
     end
 
     def test_insert_without_values
@@ -150,4 +147,4 @@ end
 
 request = TestRequests.new
 # request.test_insert
-request.test_join
+request.test_insert
