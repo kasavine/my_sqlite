@@ -120,9 +120,9 @@ class TestRequests
         MySqliteRequest.new.update('db.csv').set({"age"=>"22"}).run
 
         MySqliteRequest.new.update('db.csv').set({"age"=>"33"}).where('name', 'Andre').run
-        MySqliteRequest.new.update('db.csv').set({"age"=>"44"}).where('name', 'B').run
+        MySqliteRequest.new.update('db.csv').set({"age"=>"44"}).where('name', 'A').run
         MySqliteRequest.new.update('db.csv').set({"age"=>"55"}).where('name', 'C').run
-        MySqliteRequest.new.update('db.csv').set({"age"=>"66"}).where('name', 'G').run
+        MySqliteRequest.new.update('db.csv').set({"age"=>"66"}).where('name', 'B').run
     end
 
     def test_update_without_set
@@ -140,8 +140,14 @@ class TestRequests
         # delete everything - should it work like that ???
         MySqliteRequest.new.delete('db.csv').run
     end
+
+    def test_join
+        # delete everything - should it work like that ???
+        MySqliteRequest.new.from('tb.csv').select(['name', 'gender']).join('id_student', 'tb_join.csv', 'id').run
+        # MySqliteRequest.new.from('tb.csv').join('id_student', 'tb_join.csv', 'id').run
+    end
 end
 
 request = TestRequests.new
 # request.test_insert
-request.test_insert_wrong_values
+request.test_join

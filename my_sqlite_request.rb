@@ -45,11 +45,8 @@ class MySqliteRequest
     def join(column_on_db_a, filename_db_b, column_on_db_b)
 
         #  if no column_on_db_a || no filename_db_b || column_on_db_b  --> @data = nil
-
         # filename_db_b is not file --> some kind of error
-
         # if no such column in column_on_db_a  -- error???
-
         @join = {column_a: column_on_db_a, column_b: column_on_db_b}
         @table_name_join = filename_db_b
 
@@ -125,13 +122,23 @@ class MySqliteRequest
     end
 
     def run_join
-        # HOW TO RUN JOIN ???
+        parsed_csv_a = load_csv_hash(@table_name)
+        parsed_csv_b = load_csv_hash(@table_name_join)
+        parsed_csv_b.each do |row|
+            criteria = {@join[:column_a] => row[@join[:column_b]]}
+            row.delete(@join[:column_b]) 
+            update_op(parsed_csv_a, criteria, row) 
+        end
+        return parsed_csv_a
     end
 
     # Run - implements a run method and it will execute the request.
     def run
         parsed_csv = load_csv_hash(@table_name)
         if @request == 'select'
+            if @join != nil
+                parsed_csv = run_join
+            end
             if @order_request != nil
                 parsed_csv = order_op(parsed_csv, @order_request[:order], @order_request[:column_name])
             end
@@ -150,7 +157,7 @@ class MySqliteRequest
 
         if @request == 'update'
             if @where != nil
-                @where = {@where[:column]=> @where[:value]}
+                @where = {@where[:column] => @where[:value]}
             end
             parsed_csv = update_op(parsed_csv, @where, @data)
             write_to_file(parsed_csv, @table_name)
