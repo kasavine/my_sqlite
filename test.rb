@@ -110,6 +110,11 @@ class TestRequests
         MySqliteRequest.new.insert('db.csv').run
     end
 
+    def test_insert_wrong_values
+        # nothing - should be error ???
+        MySqliteRequest.new.insert('db.csv').values({"family" => "big"}).run
+    end
+
     def test_update
         # shoud this case exist ??? - it will update every row in a table with new data 
         MySqliteRequest.new.update('db.csv').set({"age"=>"22"}).run
@@ -137,6 +142,6 @@ class TestRequests
     end
 end
 
-# request = TestRequests.new
+request = TestRequests.new
 # request.test_insert
-# request.test_select
+request.test_insert_wrong_values
