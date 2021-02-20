@@ -42,16 +42,16 @@ class MySqliteRequest
 
     # Join - implements a join method which will load another filename_db 
     # and will join both database on a on column.
-    def join(column_on_db_a, filename_db_b, column_on_db_b)
+    def join(column_on_db_a, filename_db_b, column_on_db_b, key)
 
         #  if no column_on_db_a || no filename_db_b || column_on_db_b  --> @data = nil
-
         # filename_db_b is not file --> some kind of error
 
         # if no such column in column_on_db_a  -- error???
 
         @join = {column_a: column_on_db_a, column_b: column_on_db_b}
         @table_name_join = filename_db_b
+        @key = key
 
         return self
     end
