@@ -3,10 +3,14 @@ require_relative "my_sqlite_request"
 
 
 =begin
-    
-SELECT column1, column2
-FROM table
+   
+    0       1        2       3
+1) SELECT column1, column2
+    0      1
+2)FROM table
+0       1
 [WHERE expr]
+0        1   2
 [ORDER how column]
 
 SELECT columns
@@ -27,22 +31,27 @@ DELETE FROM table-name
 
 =end
 
+legal_start_points = ["SELECT", "UPDATE", "INSERT", "DELETE"]
+
 command = ""
 table_name = ""
+table_join = ""
 columns = []
+order = ""
+expression = ""
 
 while buf = Readline.readline("> ", true)
 
-    print("-> ", buf, "\n")
+    # print("-> ", buf, "\n")
     
-    command = buf.split(" ")[0]
-    if command == "UPDATE" || command == "INSERT" || command == "DELETE"
-        table_name = buf.split(" ")[1]
-        if table_name == nil
-            p "ERROR - provide table name to update, or to insert, or to delete"
-        end
-        p table_name
-    end
+    # command = buf.split(" ")[0]
+    # if command == "UPDATE" || command == "INSERT" || command == "DELETE"
+    #     table_name = buf.split(" ")[1]
+    #     if table_name == nil
+    #         p "ERROR - provide table name to update, or to insert, or to delete"
+    #     end
+    #     p table_name
+    # end
 
 end
 
