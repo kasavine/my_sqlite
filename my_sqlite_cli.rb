@@ -4,14 +4,14 @@ require_relative "my_sqlite_request"
 
 =begin
    
-    0       1        2       3
-1) SELECT column1, column2
+    0       1        2      
+1   SELECT column1, column2
     0      1
-2)FROM table
-0       1
-[WHERE expr]
-0        1   2
-[ORDER how column]
+2   FROM table
+    0       1
+3   [WHERE expr]
+    0        1   2
+4   [ORDER how column]
 
 SELECT columns
 FROM tab1
@@ -33,6 +33,17 @@ DELETE FROM table-name
 
 legal_start_points = ["SELECT", "UPDATE", "INSERT", "DELETE"]
 
+
+
+def readline_with_hist_management
+    line = Readline.readline('> ', true)
+    return nil if line.nil?
+    if line =~ /^\s*$/ or Readline::HISTORY.to_a[-2] == line
+        Readline::HISTORY.pop
+    end
+    line.split(" ")
+end
+
 command = ""
 table_name = ""
 table_join = ""
@@ -40,18 +51,21 @@ columns = []
 order = ""
 expression = ""
 
-while buf = Readline.readline("> ", true)
+# Debug
+while line = readline_with_hist_management
+    # p line
+    # p Readline::HISTORY.to_a
 
-    # print("-> ", buf, "\n")
-    
-    # command = buf.split(" ")[0]
-    # if command == "UPDATE" || command == "INSERT" || command == "DELETE"
-    #     table_name = buf.split(" ")[1]
-    #     if table_name == nil
-    #         p "ERROR - provide table name to update, or to insert, or to delete"
-    #     end
-    #     p table_name
-    # end
+    if line[0] == "SELECT"
+        p "I am select"
+        if line[1] == nil
+            p "THere is no chosen columns, you have to provide them."
+        end
+        1.upto line.length - 1 do |arg|
+            columns << line[arg]
+        end
+    end
+    p columns
 
 end
 
