@@ -3,7 +3,8 @@ require_relative "my_sqlite_request"
 
 legal_start_points = ["SELECT", "UPDATE", "INSERT", "DELETE"]
 
-def readline_and_split
+
+def readline_with_hist_management
     line = Readline.readline('> ', true)
     return nil if line.nil?
     if line =~ /^\s*$/ or Readline::HISTORY.to_a[-2] == line
@@ -12,21 +13,41 @@ def readline_and_split
     line.split(" ")
 end
 
+=begin
+
+FROM table
+INSERT into table
+UPDATE table
+
+SELECT column
+SELECT col1, col2, col3
+
+JOIN table ON col_a=col_b
+
+WHERE col=condition
+
+DELETE ??
+
+ORDER col DESC/ASC
+
+SET col1=val1, col2=val2
+
+VALUES ??
+
+=end
 commands = []
-arguments = []
-
-while line = readline_and_split
-    # p Readline::HISTORY.to_a
-
-    if line
+args = []
+while line = readline_with_hist_management
+    if line 
+        p line[0]
         commands << line[0]
         1.upto line.length - 1 do |arg|
-            arguments << line[arg]
+            args << line[arg]
         end
     end
 
     p commands
-    p arguments
+    p args
 end
 
 # 1: COMMAND_NOT_FOUND  
