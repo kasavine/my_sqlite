@@ -14,24 +14,47 @@ def readline_with_hist_management
     line
 end
 
-action = ""
-args = []
 
-while command = readline_with_hist_management
-    action,*args = command.split(" ")
-    action = action.downcase()
-    if action == "select"
+
+def parse_string()
+    action = ""
+    args = []
+    
+    request = MySqliteRequest.new
+    
+    while command = readline_with_hist_management
+        action,*args = command.split(" ")
+        action = action.downcase()
+        request_hash = Array.new
         
-    elsif action == "insert"
-
-    elsif action == "update"
-
-    elsif action == "delete"
-
+        if action == "select"
+            p request_hash << {action => args}
+        
+        elsif action == "from"
+            if request_hash == nil
+                return "error: SELECT action required to do FROM"
+            end
+            p request_hash << {action => args}
+        
+            #[{select : age, old, word}, {from : this place}]
+        elsif action == "insert"
+            p action
+    
+        elsif action == "update"
+    
+        elsif action == "delete"
+    
+        elsif action == "quit"
+            #end the while loop and run the request
+            next
+        end
+        p "commands here: " + command
+        p args
     end
-    p "commands here: " + command
-    p args
+    p "THIS SHOULD PRINT"
 end
+
+parse_string()
 
 # 1: COMMAND_NOT_FOUND  
 # 2: FROM_NOT_FOUND
