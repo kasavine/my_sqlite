@@ -1,9 +1,6 @@
 require 'readline'
 require_relative "my_sqlite_request"
 
-legal_start_points = ["SELECT", "UPDATE", "INSERT", "DELETE"]
-
-
 def readline_with_hist_management
     line = Readline.readline('> ', true)
     return nil if line.nil?
@@ -18,9 +15,9 @@ def parse_request
     args = []
     result = Hash.new
     while command = readline_with_hist_management
-        if command == ""
-            return result
-        end
+        # if command == ""
+        #     return result
+        # end
         action, *args = command.split(" ")
         action = action.downcase()
         if action == "select"
@@ -29,6 +26,8 @@ def parse_request
             if result['select'] != nil
                 result[action] = args
             end
+        elsif action == 'run'
+            return result
         end
         # p action
         # p args
@@ -49,7 +48,7 @@ def run_request
                 request.select(args)
             end
         end
-        p request.run
+        request.run
     end
 end
 run_request
