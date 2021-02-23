@@ -10,29 +10,27 @@ def readline_with_hist_management
     if line =~ /^\s*$/ or Readline::HISTORY.to_a[-2] == line
         Readline::HISTORY.pop
         p "READLINE"
-        line.split(" ")
     end
+    line
 end
 
-commands = []
+action = ""
 args = []
-while line = readline_with_hist_management
-    # Maybe here could besomething like 
-    # if line.shift == "SELECT"
-    #commands = line.shift()
-    # end
-    # while line
-    #     args = command.shift()
-    #end 
-    if line == "SELECT"
-        p line[0]
-        commands << line[0]
-        1.upto line.length - 1 do |arg|
-            # args << line[arg]
-        end
+
+while command = readline_with_hist_management
+    action,*args = command.split(" ")
+    action = action.downcase()
+    if action == "select"
+        
+    elsif action == "insert"
+
+    elsif action == "update"
+
+    elsif action == "delete"
+
     end
-    p "commands here: " + commands 
-    p "args here: " + args
+    p "commands here: " + command
+    p args
 end
 
 # 1: COMMAND_NOT_FOUND  
