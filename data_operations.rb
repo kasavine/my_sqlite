@@ -23,18 +23,14 @@ end
 # list_of_columns = ["name", "age"] 
 def get_columns(list_of_hashes, list_of_columns)
     result = []
-    if list_of_columns == ['*']
-        return list_of_hashes
-    else
-        list_of_hashes.each do |hash|
-            new_hash = {}
-            list_of_columns.each do |column|
-                new_hash[column] = hash[column]
-            end
-            result << new_hash
-            return result
+    list_of_hashes.each do |hash|
+        new_hash = {}
+        list_of_columns.each do |column|
+            new_hash[column] = hash[column]
         end
+        result << new_hash
     end
+    return result
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
@@ -55,7 +51,7 @@ def order_op(list_of_hashes, order_type, column)
                     list_of_hashes[i] = list_of_hashes[j]
                     list_of_hashes[j] = temp
                 end
-            else
+            elsif order_type == "desc"
                 if val_i < val_j
                     temp = list_of_hashes[i]
                     list_of_hashes[i] = list_of_hashes[j]

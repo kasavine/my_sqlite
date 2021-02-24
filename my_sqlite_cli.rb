@@ -10,64 +10,53 @@ def readline_with_hist_management
     line
 end
 
-def parse_request
-    action = ""
-    args = []
-    result = Hash.new
+def run_request_trtl_edition
+    request = MySqliteRequest.new
     while command = readline_with_hist_management
+        if command == ""
+            p request.run
+            return
+        end
         action, *args = command.split(" ")
         action = action.downcase()
-        if action == "select"
-           result[action] = args
-        elsif action == "from"
-            if result['select'] != nil
-                result[action] = args
+        case action
+
+        when "from"
+            request.from(*args)
+        
+        when "select"
+            request.select(args)
+        
+        when "insert"
+            request.insert(*args)
+        
+        when "values"
+            request.values(to_h(args))
+        
+        when "where"
+            request.where(*args)
+        
+        when "order"
+            if args.length < 2
+                p "wrong format for order - e.g. ORDER column DESC"
             end
-        elsif action == 'run'
-            return result
+            col_name = args[0]
+            if args[1].downcase != "asc" && args[1].downcase != "desc"
+                p "Provide type of sorting ... ASC or DESC"
+            end
+            request.order(args[1], col_name)
         end
-        result
     end
+end
+
+def to_h(arr)
+    result = Hash.new
+    i = 0
+    while i < arr.length 
+        result[arr[i]] = arr[i + 1]
+        i += 2
+    end
+    return result
 end
     
-def run_request
-    commands = parse_request
-    if commands != nil
-        request = MySqliteRequest.new
-        # request.from('db.csv').select(['name', 'age']).run
-        commands.each do |action, args|
-            case action
-            when "from"
-                request.from(args[0])
-            when "select"
-                request.select(args)
-            end
-        end
-        request.run
-    end
-end
-run_request
-
-=begin
-
-FROM table
-INSERT table
-UPDATE table
-
-SELECT *
-SELECT column
-SELECT col1, col2, col3
-
-JOIN table ON col_a=col_b
-
-WHERE col=val
-
-DELETE ??
-
-ORDER col DESC/ASC
-
-SET col1=val1, col2=val2
-
-VALUES ??
-
-=end
+run_request_trtl_edition

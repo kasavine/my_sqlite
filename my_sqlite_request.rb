@@ -57,7 +57,7 @@ class MySqliteRequest
     # order (:asc or :desc) and column_name. 
     # It will sort depending on the order base on the column_name.
     def order(order, column_name)
-        if !column_name || ![":desc", ":asc"].index(order)
+        if !column_name || !["desc", "asc"].index(order)
             puts "ERROR - wrong format for ORDER"
         else
             @order_request = {order: order, column_name: column_name}
