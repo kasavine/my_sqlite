@@ -57,7 +57,7 @@ class TestRequests
         p "- - - - - - - - - -"
         MySqliteRequest.new.from('db.csv').select(['name']).run
         p "- - - - - - - - - -"
-        p "THIRD - only birth_state"
+        p "THIRD - everything"
         p "- - - - - - - - - -"
         MySqliteRequest.new.from('db.csv').select(['*']).run
     end
