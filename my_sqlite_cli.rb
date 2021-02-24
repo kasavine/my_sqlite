@@ -2,7 +2,7 @@ require 'readline'
 require_relative "my_sqlite_request"
 
 def readline_with_hist_management
-    line = Readline.readline('> ', true)
+    line = Readline.readline('our-awesome-cli> ', true)
     return nil if line.nil?
     if line =~ /^\s*$/ or Readline::HISTORY.to_a[-2] == line
         Readline::HISTORY.pop
@@ -15,9 +15,6 @@ def parse_request
     args = []
     result = Hash.new
     while command = readline_with_hist_management
-        # if command == ""
-        #     return result
-        # end
         action, *args = command.split(" ")
         action = action.downcase()
         if action == "select"
@@ -29,8 +26,6 @@ def parse_request
         elsif action == 'run'
             return result
         end
-        # p action
-        # p args
         result
     end
 end
@@ -53,31 +48,13 @@ def run_request
 end
 run_request
 
-# 1: COMMAND_NOT_FOUND  
-# 2: FROM_NOT_FOUND
-# 3: WHERE_NOT_FOUND
-# 4: JOIN_NOT_FOUND
-
-# while buf = Readline.readline("> ", true)
-    # p Readline::HISTORY.to_a
-    # print("-> ", buf, "\n")
-
-    # if COMMAND_NOT_FOUND
-    # command = buf.split(" ")[0]
-    # if command invalid show error
-    # state => FROM_NOT_FOUND
-
-    # if FROM_NOT_FOUND
-    # from = buf
-    # WHERE_NOT_FOUND
-# end
-
 =begin
 
 FROM table
 INSERT table
 UPDATE table
 
+SELECT *
 SELECT column
 SELECT col1, col2, col3
 
