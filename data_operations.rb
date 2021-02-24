@@ -23,14 +23,18 @@ end
 # list_of_columns = ["name", "age"] 
 def get_columns(list_of_hashes, list_of_columns)
     result = []
-    list_of_hashes.each do |hash|
-        new_hash = {}
-        list_of_columns.each do |column|
-            new_hash[column] = hash[column]
+    if list_of_columns == ['*']
+        return list_of_hashes
+    else
+        list_of_hashes.each do |hash|
+            new_hash = {}
+            list_of_columns.each do |column|
+                new_hash[column] = hash[column]
+            end
+            result << new_hash
+            return result
         end
-        result << new_hash
     end
-     return result
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]

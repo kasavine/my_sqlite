@@ -59,7 +59,7 @@ class TestRequests
         p "- - - - - - - - - -"
         p "THIRD - only birth_state"
         p "- - - - - - - - - -"
-        MySqliteRequest.new.from('db.csv').select(['birth_state']).run
+        MySqliteRequest.new.from('db.csv').select(['*']).run
     end
 
     def test_select_where
@@ -147,4 +147,4 @@ end
 
 request = TestRequests.new
 # request.test_insert
-request.test_join
+request.test_select
