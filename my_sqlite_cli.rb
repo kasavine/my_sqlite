@@ -29,7 +29,6 @@ def run_request
         action, *args = command.split(" ") # ["name,", "age"]
         args = args.join(" ").split(", ") # "name, age" ", "
         action = action.downcase
-        # p action
 
         case action
         when "from"

@@ -90,7 +90,11 @@ class MySqliteRequest
             if @where != nil
                 parsed_csv = where_op(parsed_csv, {@where[:column]=> @where[:value]})
             end
-            p get_columns(parsed_csv, @columns)
+            result = get_columns(parsed_csv, @columns)
+            p result.first.keys
+            result.each do |line|
+                p line.values
+            end
         end
 
         if @request == 'insert'
