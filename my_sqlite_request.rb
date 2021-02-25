@@ -8,7 +8,11 @@ class MySqliteRequest
     end
 
     def from(table_name)
-        @table_name = table_name
+        if !table_name
+            puts "Please, provide existing table - name.csv"
+        else
+            @table_name = table_name
+        end
         return self
     end
     

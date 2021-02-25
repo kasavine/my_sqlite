@@ -10,46 +10,65 @@ def readline_with_hist_management
     line
 end
 
-def run_request_trtl_edition
+def run_request
     request = MySqliteRequest.new
     while command = readline_with_hist_management
-        if command == ""
-            p request.run
-            return
+        if command == "run"
+            request.run
         end
         action, *args = command.split(" ")
-        action = action.downcase()
-        case action
+        action = action.downcase
+        # p action
 
+        case action
         when "from"
-            request.from(*args)
-        
+            if args.length != 1
+                puts "Provide one existing table. Ex.: table.csv"
+            else
+                request.from(*args)
+            end
         when "select"
-            request.select(args)
-        
-        when "insert"
-            request.insert(*args)
-        
-        when "values"
-            request.values(to_h(args))
+            if args.length < 0
+                puts "Provide a column or columns. Ex.: name age"
+            else
+                request.select(args)
+            end
         
         when "where"
-            request.where(*args)
-        
+            if args.length != 2
+                puts "Provide condtions to look for. Ex.: age 20"
+            else
+                request.where(*args)
+            end
+
         when "order"
-            if args.length < 2
-                p "wrong format for order - e.g. ORDER column DESC"
+            if args.length != 2
+                p "Provide column and type. Ex.: age ASC"
+            else
+                col_name = args[0]
+                sort_type = args[1].downcase
+                request.order(sort_type, col_name)
             end
-            col_name = args[0]
-            if args[1].downcase != "asc" && args[1].downcase != "desc"
-                p "Provide type of sorting ... ASC or DESC"
+
+        when "insert"
+            if args.length != 1
+                puts "Provide one existing table. Ex.: table.csv"
+            else
+                request.insert(*args)
             end
-            request.order(args[1], col_name)
+        
+        when "values"
+            if args.length < 0
+                puts "Provide some data to insert. Ex.: "
+            else
+                request.values(to_hash(*args)) # -> data -> hash
+            end
+
         end
     end
 end
 
-def to_h(arr)
+def to_hash(arr)
     result = Hash.new
     i = 0
     while i < arr.length 
@@ -59,4 +78,4 @@ def to_h(arr)
     return result
 end
     
-run_request_trtl_edition
+run_request
