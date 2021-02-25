@@ -16,7 +16,6 @@ def write_to_file(list_of_hashes, db_name)
             csv << CSV::Row.new(hash.keys, hash.values)
         end
     end
-
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]

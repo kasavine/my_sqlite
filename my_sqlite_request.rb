@@ -119,5 +119,10 @@ class MySqliteRequest
             parsed_csv = delete_op(parsed_csv, @where)
             write_to_file(parsed_csv, @table_name)
         end
+        @request = nil
+        @where = nil
+        @table_name = nil
+        @data = nil
+        @join = nil
     end
 end

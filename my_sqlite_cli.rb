@@ -14,17 +14,20 @@ def array_to_hash(arr)
     result = Hash.new
     i = 0
     while i < arr.length 
-        result[arr[i]] = arr[i + 1]
-        i += 2
+        left, right = arr[i].split("=")
+        result[left] = right
+        i += 1
     end
     return result
 end
 
 def run_request
     request = MySqliteRequest.new
+    execute = false
     while command = readline_with_hist_management
-        if command == "run"
-            request.run
+        if command[command.length - 1] == ";"
+            command = command.split(";")[0]
+            execute = true
         end
         action, *args = command.split(" ") # ["name,", "age"]
         args = args.join(" ").split(", ") # "name, age" ", "
@@ -46,7 +49,7 @@ def run_request
         
         when "where"
             if args.length != 2
-                puts "Provide condtions to look for. Ex.: age, 20" # age=20
+                puts "Provide condtions to look for. Ex.: age=20"
             else
                 request.where(*args)
             end
@@ -69,7 +72,7 @@ def run_request
         
         when "values"
             if args.length < 1
-                puts "Provide some data to insert. Ex.: name, BOB, birth_state, CA, age, 90"
+                puts "Provide some data to insert. Ex.: name=BOB, birth_state=CA, age=90"
             else
                 request.values(array_to_hash(args)) # -> data -> hash
             end
@@ -83,11 +86,22 @@ def run_request
 
         when "set"
             if args.length < 1
-                puts "Provide some data to update. Ex.: name, BOB"
+                puts "Provide some data to update. Ex.: name=BOB"
             else
                 request.set(array_to_hash(args)) 
             end
 
+        when "delete"
+            if args.length != 1
+                puts "Provide one existing table. Ex.: table.csv! Use WHERE clause to choose record"
+            else
+                request.delete(*args)
+            end
+        end
+
+        if execute == true
+            exectue = false
+            request.run
         end
     end
 end
