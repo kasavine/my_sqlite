@@ -25,10 +25,13 @@ def run_request
     request = MySqliteRequest.new
     execute = false
     while command = readline_with_hist_management
-        if command[command.length - 1] == ";"
-            command = command.split(";")[0]
-            execute = true
+        if command == "run"
+            request.run
         end
+        # if command[command.length - 1] == ";"
+        #     command = command.split(";")[0]
+        #     execute = true
+        # end
         action, *args = command.split(" ") # ["name,", "age"]
         args = args.join(" ").split(", ") # "name, age" ", "
         action = action.downcase
@@ -101,10 +104,10 @@ def run_request
             puts "Work in progress, don't have this statement yet :)"
         end
 
-        if execute == true
-            exectue = false
-            request.run
-        end
+        # if execute == true
+        #     exectue = false
+        #     request.run
+        # end
     end
 end
 
