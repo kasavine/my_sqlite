@@ -97,6 +97,8 @@ def run_request
             else
                 request.delete(*args)
             end
+        else
+            puts "Work in progress, don't have this statement yet :)"
         end
 
         if execute == true
