@@ -23,7 +23,7 @@ end
 
 def run_request
     request = MySqliteRequest.new
-    execute = false
+    # execute = false
     while command = readline_with_hist_management
         if command == "run"
             request.run
@@ -96,6 +96,7 @@ def run_request
 
         when "delete"
             if args.length != 1
+                # conditional statement to confirm deletion of table
                 puts "Provide one existing table. Ex.: table.csv! Use WHERE clause to choose record"
             else
                 request.delete(*args)
