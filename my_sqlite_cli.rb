@@ -39,21 +39,21 @@ def run_request
             end
         when "select"
             if args.length < 1
-                puts "Provide a column or columns. Ex.: name age"
+                puts "Provide a column or columns. Ex.: name, age"
             else
                 request.select(args)
             end
         
         when "where"
             if args.length != 2
-                puts "Provide condtions to look for. Ex.: age 20"
+                puts "Provide condtions to look for. Ex.: age, 20" # age=20
             else
                 request.where(*args)
             end
 
         when "order"
             if args.length != 2
-                p "Provide column and type. Ex.: age ASC"
+                p "Provide column and type. Ex.: age, ASC" # age ASC
             else
                 col_name = args[0]
                 sort_type = args[1].downcase
@@ -69,9 +69,23 @@ def run_request
         
         when "values"
             if args.length < 1
-                puts "Provide some data to insert. Ex.: "
+                puts "Provide some data to insert. Ex.: name, BOB, birth_state, CA, age, 90"
             else
                 request.values(array_to_hash(args)) # -> data -> hash
+            end
+
+        when "update"
+            if args.length != 1
+                puts "Provide one existing table. Ex.: table.csv"
+            else
+                request.update(*args)
+            end
+
+        when "set"
+            if args.length < 1
+                puts "Provide some data to update. Ex.: name, BOB"
+            else
+                request.set(array_to_hash(args)) 
             end
 
         end
