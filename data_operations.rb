@@ -25,10 +25,14 @@ def get_columns(list_of_hashes, list_of_columns)
     result = []
     list_of_hashes.each do |hash|
         new_hash = {}
-        list_of_columns.each do |column|
-            new_hash[column] = hash[column]
+        if list_of_columns[0] == "*"
+            result << hash
+        else 
+            list_of_columns.each do |column|
+                new_hash[column] = hash[column]
+            end
+            result << new_hash
         end
-        result << new_hash
     end
     return result
 end

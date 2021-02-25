@@ -10,13 +10,24 @@ def readline_with_hist_management
     line
 end
 
+def array_to_hash(arr)
+    result = Hash.new
+    i = 0
+    while i < arr.length 
+        result[arr[i]] = arr[i + 1]
+        i += 2
+    end
+    return result
+end
+
 def run_request
     request = MySqliteRequest.new
     while command = readline_with_hist_management
         if command == "run"
             request.run
         end
-        action, *args = command.split(" ")
+        action, *args = command.split(" ") # ["name,", "age"]
+        args = args.join(" ").split(", ") # "name, age" ", "
         action = action.downcase
         # p action
 
@@ -28,7 +39,7 @@ def run_request
                 request.from(*args)
             end
         when "select"
-            if args.length < 0
+            if args.length < 1
                 puts "Provide a column or columns. Ex.: name age"
             else
                 request.select(args)
@@ -58,24 +69,14 @@ def run_request
             end
         
         when "values"
-            if args.length < 0
+            if args.length < 1
                 puts "Provide some data to insert. Ex.: "
             else
-                request.values(to_hash(*args)) # -> data -> hash
+                request.values(array_to_hash(args)) # -> data -> hash
             end
 
         end
     end
 end
 
-def to_hash(arr)
-    result = Hash.new
-    i = 0
-    while i < arr.length 
-        result[arr[i]] = arr[i + 1]
-        i += 2
-    end
-    return result
-end
-    
 run_request
