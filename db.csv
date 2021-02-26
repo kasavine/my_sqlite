@@ -1,14 +1,3 @@
-name,birth_state,age
-Andre,NJ,30
-Nick,CA,10
-Adam,WA,20
-Mel,NY,50
-Turtle,NY,40
-Den,CA,10
-Maria,TX,60
-Carlos,NY,30
-Stephany,OR,20
-Den,CA,10
-Maria,TX,60
-Carlos,NY,30
-Stephany,OR,20
+name,age,birth_state
+Bob,22,CA
+Slava,33,CA

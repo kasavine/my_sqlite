@@ -2,6 +2,7 @@ require 'csv'
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 def load_csv_hash(db_name)
+    # p db_name
     list_of_hashes = CSV.open(db_name, headers: true).map(&:to_h)
     return list_of_hashes
 end

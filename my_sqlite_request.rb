@@ -91,9 +91,13 @@ class MySqliteRequest
                 parsed_csv = where_op(parsed_csv, {@where[:column]=> @where[:value]})
             end
             result = get_columns(parsed_csv, @columns)
-            p result.first.keys
-            result.each do |line|
-                p line.values
+            if result.length == 0
+                p "nay"
+            else
+                p result.first.keys
+                result.each do |line|
+                    p line.values
+                end
             end
         end
 
@@ -119,10 +123,10 @@ class MySqliteRequest
             parsed_csv = delete_op(parsed_csv, @where)
             write_to_file(parsed_csv, @table_name)
         end
-        @request = nil
-        @where = nil
-        @table_name = nil
-        @data = nil
-        @join = nil
+        # @request = nil
+        # @where = nil
+        # @table_name = nil
+        # @data = nil
+        # @join = nil
     end
 end
