@@ -77,8 +77,7 @@ def process_action(action, args, request)
         end
     when "delete"
         if args.length != 1
-            # conditional statement to confirm deletion of table
-            puts "Provide one existing table. Ex.: db.csv! Use WHERE - otherwise WATCH OUT"
+            puts "WARNING: Must provide FROM statement with Delete. Aborting"
         else
             request.delete(*args)
         end
