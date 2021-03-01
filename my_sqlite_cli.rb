@@ -25,18 +25,19 @@ def parse_string()
     while command = readline_with_hist_management
         action,*args = command.split(" ")
         action = action.downcase()
-        request_hash = Array.new
+        request_hash = Hash.new
         
         if action == "select"
-            p request_hash << {action => args}
+            p request_hash[action] = args
         
         elsif action == "from"
-            if request_hash == nil
-                return "error: SELECT action required to do FROM"
-            end
-            p request_hash << {action => args}
+            p request_hash[action] = args
         
-            #[{select : age, old, word}, {from : this place}]
+            # request_hash ={
+            #     select : ["this", "stuff"]
+            #     from : "here"
+            #     }
+
         elsif action == "insert"
             p action
     
@@ -48,8 +49,11 @@ def parse_string()
             #end the while loop and run the request
             next
         end
-        p "commands here: " + command
+        p " action and args: *"
+        p action
         p args
+        p "* *"
+        p request_hash
     end
     p "THIS SHOULD PRINT"
 end
