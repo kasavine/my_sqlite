@@ -82,6 +82,13 @@ def process_action(action, args, request)
         else
             request.delete(*args)
         end
+    when "join"
+        if args.length < 1
+            #Here is maybe we run SELECT and FROM before JOIN?
+            puts "Please provide data for join"
+        else
+            request.join(*args)
+        end
     else
         puts "Work in progress, don't have this statement yet :)"
         puts "If you want to quit - type quit"
