@@ -83,11 +83,16 @@ def process_action(action, args, request)
             request.delete(*args)
         end
     when "join"
-        if args.length < 1
-            #Here is maybe we run SELECT and FROM before JOIN?
-            puts "Please provide data for join"
+        if args.length != 1
+            puts "Please provide data for join. Ex.: JOIN <table name> "
         else
             request.join(*args)
+        end
+    when "on"
+        if args.length != 1
+            puts "please provide columns Ex.: ON <column1=column2>"
+        else
+            
         end
     else
         puts "Work in progress, don't have this statement yet :)"
@@ -96,7 +101,7 @@ def process_action(action, args, request)
 end
 
 def execute_request(sql)
-    valid_actions = ["SELECT", "FROM", "JOIN", "WHERE", "ORDER", "INSERT", "VALUES", "UPDATE", "SET", "DELETE"]
+    valid_actions = ["SELECT", "FROM", "JOIN", "WHERE", "ORDER", "INSERT", "VALUES", "UPDATE", "SET", "DELETE", "ON"]
     command = nil
     args = []
     request = MySqliteRequest.new
