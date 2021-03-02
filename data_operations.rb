@@ -16,6 +16,9 @@ end
 #           Andre,CA,60
 def write_to_file(list_of_hashes, db_name)
     CSV.open(db_name, "w", :headers => true) do |csv|
+        if list_of_hashes.length == 0
+            return
+        end 
         csv << list_of_hashes[0].keys # how to fix this???
         list_of_hashes.each do |hash|
             csv << CSV::Row.new(hash.keys, hash.values)
@@ -151,12 +154,6 @@ def delete_op(list_of_hashes, criteria_hash)
                 result << row
             end
         end
-    else
-        list_of_hashes.each do |key, value| 
-            result << key
-        end
-        # p key
-            # p result
     end
     return result
 end
