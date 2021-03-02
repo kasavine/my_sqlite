@@ -27,12 +27,14 @@ def process_action(action, args, request)
     when "from"
         if args.length != 1
             puts "Provide one existing table. Ex.: db.csv"
+            return
         else
             request.from(*args)
         end
     when "select"
         if args.length < 1
             puts "Provide a column or columns or *. Ex.: name, age"
+            return
         else
             request.select(args)
         end
@@ -79,7 +81,7 @@ def process_action(action, args, request)
         if args.length != 1
             puts "WARNING: Must provide FROM statement with Delete. Aborting"
         else
-            request.delete(*args)
+            request.delete 
         end
     else
         puts "Work in progress, don't have this statement yet :)"

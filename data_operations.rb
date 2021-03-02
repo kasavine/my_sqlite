@@ -3,8 +3,12 @@ require 'csv'
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 def load_csv_hash(db_name)
     # p db_name
-    list_of_hashes = CSV.open(db_name, headers: true).map(&:to_h)
+    list_of_hashes = CSV.open(db_name, headers: true).map(&:to_hash)
     return list_of_hashes
+
+    # CSV.foreach(data_file, headers: true) do |row|
+    #     data << row.to_hash
+    # end
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
@@ -17,6 +21,11 @@ def write_to_file(list_of_hashes, db_name)
             csv << CSV::Row.new(hash.keys, hash.values)
         end
     end
+end
+
+def get_headers(db_name)
+    headers = CSV.read(db_name, headers: true).headers
+    headers
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
@@ -134,12 +143,20 @@ end
 # criteria_hash = {"birth_state" => "CA"}
 def delete_op(list_of_hashes, criteria_hash)
     result = []
-    list_of_hashes.each do |row|
-        if is_criteria_satisfied(row, criteria_hash)
-            next
-        else
-            result << row
+    if criteria_hash != nil
+        list_of_hashes.each do |row|
+            if is_criteria_satisfied(row, criteria_hash)
+                next
+            else
+                result << row
+            end
         end
+    else
+        list_of_hashes.each do |key, value| 
+            result << key
+        end
+        # p key
+            # p result
     end
     return result
 end

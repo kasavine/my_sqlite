@@ -8,8 +8,8 @@ class MySqliteRequest
     end
 
     def from(table_name)
-        if !table_name
-            puts "Please, provide existing table - name.csv"
+        if table_name == nil
+            puts "Provide existing table. Ex.: db.csv"
         else
             @table_name = table_name
         end
@@ -17,8 +17,12 @@ class MySqliteRequest
     end
     
     def select(columns)
-        @request = 'select'
-        @columns = columns
+        if columns == nil
+            puts "Select column(s)."
+        else
+            @request = 'select'
+            @columns = columns
+        end
         return self
     end
 
@@ -60,9 +64,14 @@ class MySqliteRequest
         return self
     end
 
-    def delete(table_name)
+    # def delete(table_name)
+    #     @request = 'delete'
+    #     @table_name = table_name
+    #     return self
+    # end
+
+    def delete
         @request = 'delete'
-        @table_name = table_name
         return self
     end
 
@@ -75,6 +84,17 @@ class MySqliteRequest
             update_op(parsed_csv_a, criteria, row) 
         end
         return parsed_csv_a
+    end
+
+    def print_selection(result)
+        if result.length == 0
+            puts "There is no result for this request."
+        else
+            puts result.first.keys.join('|')
+            result.each do |line|
+                puts line.values.join('|')
+            end
+        end
     end
 
     # run executes the request.
@@ -91,14 +111,7 @@ class MySqliteRequest
                 parsed_csv = where_op(parsed_csv, {@where[:column]=> @where[:value]})
             end
             result = get_columns(parsed_csv, @columns)
-            if result.length == 0
-                p "nay"
-            else
-                p result.first.keys
-                result.each do |line|
-                    p line.values
-                end
-            end
+            print_selection(result)
         end
 
         if @request == 'insert'
@@ -123,10 +136,10 @@ class MySqliteRequest
             parsed_csv = delete_op(parsed_csv, @where)
             write_to_file(parsed_csv, @table_name)
         end
-        # @request = nil
-        # @where = nil
-        # @table_name = nil
-        # @data = nil
-        # @join = nil
+        @request = nil
+        @where = nil
+        @table_name = nil
+        @data = nil
+        @join = nil
     end
 end
