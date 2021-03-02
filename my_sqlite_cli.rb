@@ -27,12 +27,14 @@ def process_action(action, args, request)
     when "from"
         if args.length != 1
             puts "Provide one existing table. Ex.: db.csv"
+            return
         else
             request.from(*args)
         end
     when "select"
         if args.length < 1
             puts "Provide a column or columns or *. Ex.: name, age"
+            return
         else
             request.select(args)
         end
@@ -76,11 +78,11 @@ def process_action(action, args, request)
             request.set(array_to_hash(args)) 
         end
     when "delete"
-        if args.length != 1
+        if args.length != 0
             # conditional statement to confirm deletion of table
-            puts "Provide one existing table. Ex.: db.csv! Use WHERE - otherwise WATCH OUT"
+            puts "Ex.: DELETE FROM db.csv! Use WHERE - otherwise WATCH OUT"
         else
-            request.delete(*args)
+            request.delete 
         end
     else
         puts "Work in progress, don't have this statement yet :)"

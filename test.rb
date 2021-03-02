@@ -130,7 +130,7 @@ class TestRequests
     def test_delete
         MySqliteRequest.new.delete('db.csv').where('name', 'C').run
         # why it is deleting "a" - in the table there is only "A" -  WHY ??????
-        MySqliteRequest.new.delete('db.csv').where('name', 'a').run
+        MySqliteRequest.new.delete('db.csv').where('lastname', 'Mary').run
     end
 
     def test_delete_everything
@@ -147,4 +147,4 @@ end
 
 request = TestRequests.new
 # request.test_insert
-request.test_select
+request.test_delete

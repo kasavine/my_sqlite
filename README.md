@@ -12,9 +12,10 @@ our-awesome-cli> SELECT lastname, age FROM db.csv ORDER age ASC
 
 our-awesome-cli> INSERT db.csv VALUES lastname=Aaaa, firstname=Bbbb, age=11, state=AA
 
-our-awesome-cli> UPDATE db.csv SET firstname=UPDATED WHERE firstname=Grey
+our-awesome-cli> db.csv SET firstname=UPDATED WHERE firstname=Grey
 
 our-awesome-cli> DELETE db.csv WHERE lastname=Jamie 
+our-awesome-cli> DELETE db.csv 
 
 # to close CLI
 our-awesome-cli> quit
