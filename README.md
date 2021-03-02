@@ -12,21 +12,15 @@ our-awesome-cli> SELECT lastname, age FROM db.csv ORDER age ASC
 
 our-awesome-cli> SELECT * FROM tb.csv JOIN tb_join.csv ON col=col_join
 
-
 our-awesome-cli> INSERT db.csv VALUES lastname=Aaaa firstname=Bbbb age=11 state=AA
-split on commas
 
 our-awesome-cli> UPDATE db.csv SET firstname=UPDATED WHERE firstname=Grey
-check for WHERE ...
 
 our-awesome-cli> DELETE FROM db.csv WHERE lastname=Jamie 
 our-awesome-cli> DELETE FROM db.csv 
-check for WHERE ...
-
 
 # to close CLI
 our-awesome-cli> quit
-
 
 ## db.csv
 name,birth_state,age
