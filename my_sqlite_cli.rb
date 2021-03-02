@@ -26,36 +26,47 @@ def process_action(action, args, request)
     case action
     when "from"
         if args.length != 1
-            puts "Provide one existing table. Ex.: db.csv"
+            puts "Ex.: FROM db.csv"
             return
         else
             request.from(*args)
         end
     when "select"
         if args.length < 1
-            puts "Provide a column or columns or *. Ex.: name, age"
+            puts "Ex.: SELECT name, age"
             return
         else
             request.select(args)
         end
     when "where"
         if args.length != 1
-            puts "Provide condtions to look for, no spaces between column and value. Ex.: age=20"
+            puts "Ex.: WHERE age=20"
         else
             col, val = args[0].split("=")
             request.where(col, val)
         end
     when "order"
         if args.length != 2
-            p "Provide column and type after ORDER. Ex.: age ASC"
+            p "Ex.: ORDER age ASC"
         else
             col_name = args[0]
             sort_type = args[1].downcase
             request.order(sort_type, col_name)
         end
+    when "join"
+        if args.length != 3
+            puts "Do better. Ex.: JOIN table ON col_a=col_b"
+        elsif args[1] != "ON"
+            puts "Provide ON statement. Ex.: JOIN table ON col_a=col_b"
+            return
+        else
+            table = args[0]
+            col_a, col_b = args[2].split("=")
+            request.join(col_a, table, col_b)
+        end
     when "insert"
         if args.length != 1
-            puts "Provide one existing table. Ex.: db.csv"
+            puts "Ex.: INSERT db.csv. Use VALUES"
         else
             request.insert(*args)
         end
@@ -67,26 +78,26 @@ def process_action(action, args, request)
         end
     when "update"
         if args.length != 1
-            puts "Provide one existing table. Ex.: db.csv"
+            puts "Ex.: UPDATE db.csv"
         else
             request.update(*args)
         end
     when "set"
         if args.length < 1
-            puts "Provide some data to update. Ex.: name=BOB"
+            puts "Ex.: SET name=BOB. Use WHERE - otherwise WATCH OUT."
         else
             request.set(array_to_hash(args)) 
         end
     when "delete"
         if args.length != 0
             # conditional statement to confirm deletion of table
-            puts "Ex.: DELETE FROM db.csv! Use WHERE - otherwise WATCH OUT"
+            puts "Ex.: DELETE FROM db.csv! Use WHERE - otherwise WATCH OUT."
         else
             request.delete 
         end
     else
         puts "Work in progress, don't have this statement yet :)"
-        puts "If you want to quit - type quit"
+        puts "If you want to quit - type quit."
     end
 end
 
@@ -101,7 +112,9 @@ def execute_request(sql)
         # p splited_command[arg]
         if valid_actions.include?(splited_command[arg].upcase())
             if (command != nil) 
-                args = args.join(" ").split(", ")
+                if command != "JOIN"
+                    args = args.join(" ").split(", ")
+                end
                 process_action(command, args, request)
                 command = nil
                 args = []
@@ -111,8 +124,14 @@ def execute_request(sql)
             args << splited_command[arg]
         end
     end
-    process_action(command, args, request)
-    request.run
+    # p args[-1, 1]
+    if args[-1].end_with?(";")
+        args[-1] = args[-1].chomp(";")
+        process_action(command, args, request)
+        request.run
+    else
+        p "Finish your request with ;"
+    end
 end
 
 def run
@@ -126,5 +145,5 @@ def run
     end
 end
 
-run
+run()
 

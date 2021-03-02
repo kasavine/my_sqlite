@@ -83,6 +83,7 @@ class MySqliteRequest
             row.delete(@join[:column_b]) 
             update_op(parsed_csv_a, criteria, row) 
         end
+        # p parsed_csv_a
         return parsed_csv_a
     end
 
@@ -90,15 +91,19 @@ class MySqliteRequest
         if result.length == 0
             puts "There is no result for this request."
         else
-            puts result.first.keys.join('|')
+            puts result.first.keys.join(' | ')
             result.each do |line|
-                puts line.values.join('|')
+                puts line.values.join(' | ')
             end
         end
     end
 
     # run executes the request.
     def run
+        if @table_name == nil
+            puts "Otherwise please enter a valid request."
+            return
+        end
         parsed_csv = load_csv_hash(@table_name)
         if @request == 'select'
             if @join != nil
@@ -135,6 +140,10 @@ class MySqliteRequest
             end
             parsed_csv = delete_op(parsed_csv, @where)
             write_to_file(parsed_csv, @table_name)
+
+        # else
+        #     puts "Enter the valid request"
+
         end
         @request = nil
         @where = nil

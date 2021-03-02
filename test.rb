@@ -140,11 +140,11 @@ class TestRequests
 
     def test_join
         # delete everything - should it work like that ???
-        MySqliteRequest.new.from('tb.csv').select(['name', 'gender']).join('id_student', 'tb_join.csv', 'id').run
+        MySqliteRequest.new.from('tb.csv').select(['*']).join('id_student', 'tb_join.csv', 'id').run
         # MySqliteRequest.new.from('tb.csv').join('id_student', 'tb_join.csv', 'id').run
     end
 end
 
 request = TestRequests.new
 # request.test_insert
-request.test_delete
+request.test_join

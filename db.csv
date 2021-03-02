@@ -1,7 +1,10 @@
 lastname,firstname,age,state
-Slava,Kov,30,CA
-Rachel,Booker,10,NY
-Laura,Grey,50,NY
-Craig,Johnson,20,CA
-Mary,Jenkins,40,NJ
-Jamie,Smith,70,NJ
+Slava,UPDATED,30,CA
+Rachel,UPDATED,10,NY
+Laura,UPDATED,50,NY
+Craig,UPDATED,20,CA
+Mary,UPDATED,40,NJ
+Jamie,UPDATED,70,NJ
+Aaaa,UPDATED,11,AA
+Aaaa,UPDATED,11,BB
+Aaaa,UPDATED,11,CC
