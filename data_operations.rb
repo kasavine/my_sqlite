@@ -2,13 +2,13 @@ require 'csv'
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 def load_csv_hash(db_name)
-    # p db_name
-    list_of_hashes = CSV.open(db_name, headers: true).map(&:to_hash)
-    return list_of_hashes
-
-    # CSV.foreach(data_file, headers: true) do |row|
-    #     data << row.to_hash
-    # end
+    if(!File.exist?(db_name))
+        puts 'File does not exist'
+        return
+    else
+        list_of_hashes = CSV.open(db_name, headers: true).map(&:to_hash)
+        return list_of_hashes
+    end
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
@@ -26,27 +26,26 @@ def write_to_file(list_of_hashes, db_name)
     end
 end
 
-def get_headers(db_name)
-    headers = CSV.read(db_name, headers: true).headers
-    headers
-end
-
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]
 # list_of_columns = ["name", "age"] 
 def get_columns(list_of_hashes, list_of_columns)
-    result = []
-    list_of_hashes.each do |hash|
-        new_hash = {}
-        if list_of_columns[0] == "*"
-            result << hash
-        else 
-            list_of_columns.each do |column|
-                new_hash[column] = hash[column]
+    if !list_of_hashes
+        return
+    else
+        result = []
+        list_of_hashes.each do |hash|
+            new_hash = {}
+            if list_of_columns[0] == "*"
+                result << hash
+            else 
+                list_of_columns.each do |column|
+                    new_hash[column] = hash[column]
+                end
+                result << new_hash
             end
-            result << new_hash
         end
+        return result
     end
-    return result
 end
 
 # list_of_hashes = [{"name" => "tor", "age" => 2, "gender" => "M"}, {...}, {...}]

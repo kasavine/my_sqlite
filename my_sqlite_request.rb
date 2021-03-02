@@ -82,6 +82,9 @@ class MySqliteRequest
     end
 
     def print_selection(result)
+        if !result
+            return
+        end
         if result.length == 0
             puts "There is no result for this request."
         else
@@ -100,7 +103,7 @@ class MySqliteRequest
         if @table_name != nil
             parsed_csv = load_csv_hash(@table_name)
         else
-            puts "Please provide valid request."
+            puts "Valid request contains table"
             return
         end
         if @request == 'select'
@@ -113,7 +116,7 @@ class MySqliteRequest
             if @where != nil
                 parsed_csv = where_op(parsed_csv, {@where[:column]=> @where[:value]})
             end
-            if @columns != nil
+            if @columns != nil && @table_name != nil
                 result = get_columns(parsed_csv, @columns)
                 print_selection(result)
             else
@@ -143,11 +146,8 @@ class MySqliteRequest
             end
             parsed_csv = delete_op(parsed_csv, @where)
             write_to_file(parsed_csv, @table_name)
-
-        # else
-        #     puts "Enter the valid request"
-
         end
+
         @request = nil
         @where = nil
         @table_name = nil
