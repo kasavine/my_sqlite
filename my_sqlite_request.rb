@@ -64,12 +64,6 @@ class MySqliteRequest
         return self
     end
 
-    # def delete(table_name)
-    #     @request = 'delete'
-    #     @table_name = table_name
-    #     return self
-    # end
-
     def delete
         @request = 'delete'
         return self
@@ -92,9 +86,12 @@ class MySqliteRequest
             puts "There is no result for this request."
         else
             puts result.first.keys.join(' | ')
+            len = result.first.keys.join(' | ').length
+            puts "-" * len
             result.each do |line|
                 puts line.values.join(' | ')
             end
+            puts "-" * len
         end
     end
 
