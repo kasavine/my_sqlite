@@ -78,7 +78,7 @@ def process_action(action, args, request)
             request.set(array_to_hash(args)) 
         end
     when "delete"
-        if args.length != 1
+        if args.length > 1
             puts "WARNING: Must provide FROM statement with Delete. Aborting"
         else
             request.delete 

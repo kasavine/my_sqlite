@@ -153,7 +153,8 @@ def delete_op(list_of_hashes, criteria_hash)
         end
     else
         list_of_hashes.each do |key, value| 
-            result << key
+            p result << key
+            
         end
         # p key
             # p result
