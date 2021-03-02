@@ -97,11 +97,12 @@ class MySqliteRequest
 
     # run executes the request.
     def run
-        if @table_name == nil
-            puts "Otherwise please enter a valid request."
+        if @table_name != nil
+            parsed_csv = load_csv_hash(@table_name)
+        else
+            puts "Please provide valid request."
             return
         end
-        parsed_csv = load_csv_hash(@table_name)
         if @request == 'select'
             if @join != nil
                 parsed_csv = run_join
@@ -112,8 +113,13 @@ class MySqliteRequest
             if @where != nil
                 parsed_csv = where_op(parsed_csv, {@where[:column]=> @where[:value]})
             end
-            result = get_columns(parsed_csv, @columns)
-            print_selection(result)
+            if @columns != nil
+                result = get_columns(parsed_csv, @columns)
+                print_selection(result)
+            else
+                puts "Provide columns to SELECT"
+                return
+            end
         end
 
         if @request == 'insert'
