@@ -1,7 +1,13 @@
-## sqlite
+## MY_SQLITE
 
-## schema-plan
-https://drive.google.com/file/d/1bH4a-3Rs9eeqjek0W94MfeFeSb4EZg_q/view?usp=sharing
+class MySqliteRequest has similar behavior as a request in Sqlite
+method run returns instanbce of my_sqlite_request, building request progressively
+
+=> request = MySqliteRequest.new
+=> request = request.from('table_name')
+=> request = request.select('column')
+=> request = request.where('column', 'value)
+=> request.run
 
 ## to run CLI
     ruby my_sqlite_cli.rb
@@ -25,3 +31,6 @@ https://drive.google.com/file/d/1bH4a-3Rs9eeqjek0W94MfeFeSb4EZg_q/view?usp=shari
 
 ## to quit CLI
 our-awesome-cli> quit
+
+## schema-plan
+https://drive.google.com/file/d/1bH4a-3Rs9eeqjek0W94MfeFeSb4EZg_q/view?usp=sharing
