@@ -1,9 +1,9 @@
 ## MY_SQLITE
 
 #### 1. Clone and run MY CLI: 
-1. `git clone https://github.com/kasavine/sqlite.git`
-2. `cd sqlite`
-3. `ruby my_sqlite_cli.rb`
+-  `git clone https://github.com/kasavine/sqlite.git`
+-  `cd sqlite`
+-  `ruby my_sqlite_cli.rb`
 
 ###### SELECT options
 ```
