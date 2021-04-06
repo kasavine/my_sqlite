@@ -1,9 +1,10 @@
 ## MY_SQLITE
 
 #### my_sqlite_request.rb
-- CLASS **MySqliteRequest** has similar behavior as a request in real Sqlite
 
-- METHOD **run()** returns instance of my_sqlite_request, building request progressively
+**MySqliteRequest** has similar behavior as a request in real Sqlite
+
+**run()** returns instance of my_sqlite_request, building request progressively
 ```
 request = MySqliteRequest.new
 request = request.from('table_name')
@@ -23,10 +24,8 @@ Methods  implemented:
 - delete
 ```
 
-#### To run  MY CLI
-```
-=> ruby my_sqlite_cli.rb
-```
+#### To run  MY CLI: `ruby my_sqlite_cli.rb`
+
 
 #### SELECT options
 ```
