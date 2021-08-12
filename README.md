@@ -1,4 +1,5 @@
 ## MY_SQLITE
+- this is a mini-sqlite project which behaves almost like a real sqlite
 
 #### 1. Clone and run MY CLI: 
 -  `git clone https://github.com/kasavine/sqlite.git`
