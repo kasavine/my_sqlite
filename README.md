@@ -1,45 +1,38 @@
-## MY_SQLITE
+## MY SQLITE
 
-#### 1. Clone and run MY CLI: 
--  `git clone https://github.com/kasavine/sqlite.git`
--  `cd sqlite`
--  `ruby my_sqlite_cli.rb`
+This is a program that filters data from a database using a custom class, MySQLiteRequest, which behaves like a real SQLite database (almost).
 
-###### SELECT options
-```
-our-awesome-cli> SELECT lastname FROM db.csv;    [JOIN user_id=id]
-our-awesome-cli> SELECT lastname, firstname FROM db.csv WHERE lastname=Laura;
-our-awesome-cli> SELECT lastname, age FROM db.csv ORDER age ASC;
-our-awesome-cli> SELECT * FROM tb.csv JOIN tb_join.csv ON col=col_join;
-```
+#### Usage
+-  Clone the repository to your local machine: - `git clone https://github.com/kasavine/sqlite.git`
+-  Change directory: `cd sqlite`
+-  Run rb cli: `ruby my_sqlite_cli.rb`
 
-###### INSERT options
-```
-our-awesome-cli> INSERT db.csv VALUES lastname=Aaaa firstname=Bbbb age=11 state=AA;
-```
+#### Features
+* Filters data from a database using a custom class
+* Mimics the behavior of a real SQLite database
+* Easy to use Command Line Interface (CLI)
 
-###### UPDATE options
-```
-our-awesome-cli> UPDATE db.csv SET firstname=UPDATED WHERE firstname=Grey;
-our-awesome-cli> UPDATE db.csv SET firstname=UPDATED; (will update every record in a table)
-```
+#### Custom Class MySQLiteRequest
+This class is used to filter data from the database. It has various methods to perform operations like SELECT, FROM, WHERE, JOIN, ORDER, INSERT, UPDATE, DELETE, just like in a real SQLite database. 
 
-###### DELETE options
-```
-our-awesome-cli> DELETE FROM db.csv WHERE lastname=Jamie;
-our-awesome-cli> DELETE FROM db.csv; (will delete every record in a table)
-```
-
-###### to quit CLI
-```
-our-awesome-cli> quit
-```
-
-#### 2. my_sqlite_request.rb
-
-**MySqliteRequest** has similar behavior as a request in real Sqlite
+* SELECT options
+  * `our-awesome-cli> SELECT lastname FROM db.csv;    [JOIN user_id=id]`
+  * `our-awesome-cli> SELECT lastname, firstname FROM db.csv WHERE lastname=Laura;`
+  * `our-awesome-cli> SELECT lastname, age FROM db.csv ORDER age ASC;`
+  * `our-awesome-cli> SELECT * FROM tb.csv JOIN tb_join.csv ON col=col_join;`
+* INSERT options
+  * `our-awesome-cli> INSERT db.csv VALUES lastname=Aaaa firstname=Bbbb age=11 state=AA;`
+* UPDATE options
+  * `our-awesome-cli> UPDATE db.csv SET firstname=UPDATED WHERE firstname=Grey;`
+  * `our-awesome-cli> UPDATE db.csv SET firstname=UPDATED; (will update every record in a table)`
+* DELETE options
+  * `our-awesome-cli> DELETE FROM db.csv WHERE lastname=Jamie;` 
+  * `our-awesome-cli> DELETE FROM db.csv; (will delete every record in a table)`
+* To quit CLI
+  * `our-awesome-cli> quit`
 
 **run()** returns instance of my_sqlite_request, building request progressively
+
 ```
 request = MySqliteRequest.new
 request = request.from('table_name')
@@ -51,13 +44,5 @@ OR
 
 MySqliteRequest('table_name').select('column').where('column', 'value').run
 ```
-```
-Methods  implemented: 
-- select, from, where, join, order
-- insert, values
-- update, set
-- delete
-```
-
-## schema-plan
+### schema-plan
 https://drive.google.com/file/d/1bH4a-3Rs9eeqjek0W94MfeFeSb4EZg_q/view?usp=sharing
